@@ -6,10 +6,8 @@ steps:
   - name: terraform
     image: hashicorp/terraform
     environment:
-      ACCESS_KEY_ID:
-        from_secret: drone-aws-credentials
-      SECRET_ACCESS_KEY:
-        from_secret: drone-aws-credentials
+      ACCESS_KEY_ID: AKIAWJVU4T7CC27ZWKUW
+      SECRET_ACCESS_KEY: 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
     commands:
       - terraform init
       - terraform plan
