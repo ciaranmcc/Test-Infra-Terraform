@@ -1,5 +1,7 @@
 provider "aws" {
   region = "us-east-1"  # Change this to your desired region
+  access_key = var.TF_VAR_AWS_ACCESS_KEY_ID
+  secret_key = var.TF_VAR_AWS_SECRET_ACCESS_KEY
 }
 
 resource "aws_vpc" "example_vpc" {

@@ -7,9 +7,9 @@ steps:
     image: hashicorp/terraform
     environment:
        TF_VAR_AWS_ACCESS_KEY_ID:
-        from_secret: drone-aws-credentials
+        from_secret: aws-access-key-id
        TF_VAR_AWS_SECRET_ACCESS_KEY:
-        from_secret: drone-aws-credentials
+        from_secret: aws-secret-access-key
     commands:
       - terraform init
       - terraform plan
