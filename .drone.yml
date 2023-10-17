@@ -6,9 +6,9 @@ steps:
   - name: terraform
     image: hashicorp/terraform
     environment:
-       TF_VAR_AWS_ACCESS_KEY_ID:
+       ACCESS_KEY_ID:
         from_secret: aws-access-key-id
-       TF_VAR_AWS_SECRET_ACCESS_KEY:
+       SECRET_ACCESS_KEY:
         from_secret: aws-secret-access-key
     commands:
       - terraform init
