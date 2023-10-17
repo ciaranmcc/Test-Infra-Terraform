@@ -1,2 +1,2 @@
-variable "AWS_ACCESS_KEY_ID" {}
-variable "AWS_SECRET_ACCESS_KEY" {}
+variable "TF_VAR_AWS_ACCESS_KEY_ID" {}
+variable "TF_VAR_AWS_SECRET_ACCESS_KEY" {}
