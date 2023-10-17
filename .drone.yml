@@ -11,6 +11,9 @@ steps:
        SECRET_ACCESS_KEY:
         from_secret: aws-secret-access-key
     commands:
+      - echo "Printing environment variables..."
+      - echo "ACCESS_KEY_ID $ACCESS_KEY_ID"
+      - echo "SECRET_ACCESS_KEY $SECRET_ACCESS_KEY"
       - terraform init
       - terraform plan
       - terraform apply -auto-approve
