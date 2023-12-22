@@ -5,11 +5,17 @@ name: default
 steps:
   - name: terraform
     image: hashicorp/terraform
-    environment:
-       AWS_ACCESS_KEY_ID:
-        from_secret: aws-secet
-       AWS_SECRET_ACCESS_KEY:
-        from_secret: aws-secret
+    env:
+    - name: AWS_ACCESS_KEY_ID
+      valueFrom:
+        secretKeyRef:
+          name: aws-secret
+          key: AWS_ACCESS_KEY_ID
+    - name: AWS_SECRET_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: aws-secret
+          key: AWS_SECRET_ACCESS_KEY
     commands:
       - echo "Printing environment variables..."
       - echo $AWS_ACCESS_KEY_ID
