@@ -1,26 +1,24 @@
 kind: pipeline
 type: kubernetes
-name: terraform-plan
+name: default
 
 steps:
-  - name: print-secrets
-    image: alpine
+  - name: terraform
+    image: hashicorp/terraform
     environment:
-      AWS_ACCESS_KEY_ID:
+       AWS_ACCESS_KEY_ID:
         from_secret: aws_access_key_id
-      AWS_SECRET_ACCESS_KEY:
+       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
     commands:
-      - echo "AWS Access Key: ${WS_ACCESS_KEY_ID}"
-      - echo "AWS Secret Key: ${AWS_SECRET_ACCESS_KEY}"
-
-  - name: terraform-plan
-    image: hashicorp/terraform
-    commands:
+      - echo "Printing environment variables..."
+      - echo ${AWS_ACCESS_KEY_ID}
+      - echo ${AWS_SECRET_ACCESS_KEY}
       - terraform init
       - terraform plan
-    environment:
-      AWS_ACCESS_KEY_ID:
-        from_secret: aws_access_key_id
-      AWS_SECRET_ACCESS_KEY:
-        from_secret: aws_secret_access_key
+    when:
+      event:
+        - push
+        - pull_request
+
+
