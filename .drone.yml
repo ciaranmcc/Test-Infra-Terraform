@@ -11,8 +11,8 @@ steps:
       AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
     commands:
-      - echo "AWS Access Key: $AWS_ACCESS_KEY_ID"
-      - echo "AWS Secret Key: $AWS_SECRET_ACCESS_KEY"
+      - echo "AWS Access Key: ${WS_ACCESS_KEY_ID}"
+      - echo "AWS Secret Key: ${AWS_SECRET_ACCESS_KEY}"
 
   - name: terraform-plan
     image: hashicorp/terraform
