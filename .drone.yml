@@ -11,6 +11,7 @@ steps:
        AWS_SECRET_ACCESS_KEY:
         from_secret: aws_secret_access_key
     commands:
+      - env
       - echo "Printing environment variables...."
       - echo ${AWS_ACCESS_KEY_ID}
       - echo ${AWS_SECRET_ACCESS_KEY}
