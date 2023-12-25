@@ -21,8 +21,9 @@
 #        - push
 #        - pull_request
 
----
+
 kind: pipeline
+type: kubernetes
 name: terraform-plan
 
 steps:
