@@ -7,13 +7,13 @@ steps:
     image: hashicorp/terraform
     environment:
        AWS_ACCESS_KEY_ID:
-        from_secret: aws-secret
+        from_secret: AWS_ACCESS_KEY_ID
        AWS_SECRET_ACCESS_KEY:
-        from_secret: aws-secret
+        from_secret: AWS_SECRET_ACCESS_KEY
     commands:
       - echo "Printing environment variables..."
-      - echo $AWS_ACCESS_KEY_ID
-      - echo $AWS_SECRET_ACCESS_KEY
+      - echo ${AWS_ACCESS_KEY_ID}
+      - echo ${AWS_SECRET_ACCESS_KEY}
       - terraform init
       - terraform plan
     when:
