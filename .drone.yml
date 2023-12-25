@@ -1,22 +1,49 @@
+#kind: pipeline
+#type: kubernetes
+#name: default
+
+#steps:
+#  - name: terraform
+#    image: hashicorp/terraform
+#    environment:
+#       AWS_ACCESS_KEY_ID:
+#        from_secret: AWS_ACCESS_KEY_ID
+#       AWS_SECRET_ACCESS_KEY:
+#        from_secret: AWS_SECRET_ACCESS_KEY
+#    commands:
+#      - echo "Printing environment variables..."
+#      - echo ${AWS_ACCESS_KEY_ID}
+#      - echo ${AWS_SECRET_ACCESS_KEY}
+#      - terraform init
+#      - terraform plan
+#    when:
+#      event:
+#        - push
+#        - pull_request
+
+---
 kind: pipeline
-type: kubernetes
-name: default
+name: terraform-plan
 
 steps:
-  - name: terraform
-    image: hashicorp/terraform
+  - name: print-secrets
+    image: alpine
     environment:
-       AWS_ACCESS_KEY_ID:
-        from_secret: AWS_ACCESS_KEY_ID
-       AWS_SECRET_ACCESS_KEY:
-        from_secret: AWS_SECRET_ACCESS_KEY
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
     commands:
-      - echo "Printing environment variables..."
-      - echo ${AWS_ACCESS_KEY_ID}
-      - echo ${AWS_SECRET_ACCESS_KEY}
+      - echo "AWS Access Key: $AWS_ACCESS_KEY_ID"
+      - echo "AWS Secret Key: $AWS_SECRET_ACCESS_KEY"
+
+  - name: terraform-plan
+    image: hashicorp/terraform
+    commands:
       - terraform init
       - terraform plan
-    when:
-      event:
-        - push
-        - pull_request
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
