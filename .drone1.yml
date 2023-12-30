@@ -1,0 +1,32 @@
+kind: pipeline
+name: terraform-vpc-deployment
+
+steps:
+  - name: plan
+    image: hashicorp/terraform
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id   # Reference the Drone secret
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key  # Reference the Drone secret
+    commands:
+      - terraform init
+      - terraform plan -var="region=us-west-2" -out=tfplan
+    when:
+      event:
+        - push
+        - pull_request
+
+  - name: apply
+    image: hashicorp/terraform
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: AWS_ACCESS_KEY_ID   # Reference the Drone secret
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: AWS_SECRET_ACCESS_KEY  # Reference the Drone secret
+    commands:
+      - terraform apply tfplan
+    when:
+      event:
+        - push
+        - pull_request
