@@ -16,7 +16,7 @@ steps:
       - export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
 #      - echo "Printing environment variables...."
       - terraform init
-#     - terraform plan
+      - terraform plan
     when:
       event:
         - push
