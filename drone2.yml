@@ -1,0 +1,26 @@
+kind: pipeline
+name: aws-deployment
+
+steps:
+  - name: configure-aws
+    image: amazon/aws-cli
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+    commands:
+      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+      - aws configure set default.region us-west-2  # Set your desired region
+      # Other AWS configurations if needed
+
+  - name: deploy-to-aws
+    image: amazon/aws-cli
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
+    commands:
+      - aws s3 ls  # Replace with your actual AWS CLI commands for deployment
