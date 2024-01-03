@@ -4,7 +4,7 @@ name: default
 
 steps:
   - name: terraform
-    image: hashicorp/terraform
+    image: ciaranmcc/custom-terraform-awscli-image
     environment:
       AWS_ACCESS_KEY_ID:
         from_secret: aws_access_key_id
