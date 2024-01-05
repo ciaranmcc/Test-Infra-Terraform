@@ -3,7 +3,8 @@ type: kubernetes
 name: default
 
 environment:
-  GOOS: linux
+  AWS_ACCESS_KEY_ID:
+    from_secret: aws_access_key_id
   GOARCH: amd64
 
 steps:
