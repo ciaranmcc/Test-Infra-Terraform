@@ -26,7 +26,20 @@ steps:
       - terraform plan -var="AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" -var="AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
   - name: apply
     image: custom-terraform-awscli-image
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
     commands: 
+      - aws_role_cred=$(aws sts assume-role --role-arn "arn:aws:iam::833904932690:role/DroneCI" --role-session-name drone-ci)
+      - echo $aws_role_cred
+      - export AWS_ACCESS_KEY_ID=$(echo $aws_role_cred | jq .Credentials.AccessKeyId | xargs)
+      - export AWS_SECRET_ACCESS_KEY=$(echo $aws_role_cred | jq .Credentials.SecretAccessKey | xargs)
+      - export AWS_SESSION_TOKEN=$(echo $aws_role_cred | jq .Credentials.SessionToken |xargs)
+      - echo $AWS_ACCESS_KEY_ID
+      - echo $AWS_SECRET_ACCESS_KEY
+      - echo $AWS_SESSION_TOKEN
       - terraform apply -auto-approve -var="AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" -var="AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
     when:
       event:
