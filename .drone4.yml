@@ -1,16 +1,19 @@
 kind: pipeline
 type: kubernetes
-name: terraform-deploy
+name: default
 
 environment:
-  AWS_ACCESS_KEY_ID:
-    from_secret: aws_access_key_id
-  AWS_SECRET_ACCESS_KEY:
-    from_secret: aws_secret_access_key
+  GOOS: linux
+  GOARCH: amd64
 
 steps:
   - name: init
     image: custom-terraform-awscli-image
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: aws_access_key_id
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: aws_secret_access_key
     commands:
       - aws_role_cred=$(aws sts assume-role --role-arn "arn:aws:iam::833904932690:role/DroneCI" --role-session-name drone-ci)
       - echo $aws_role_cred
