@@ -14,7 +14,7 @@ steps:
     commands:
       - terraform init
 
-  - name: plan
+  - name: plan #test
     image: custom-terraform-awscli-image
     commands: 
       - |
