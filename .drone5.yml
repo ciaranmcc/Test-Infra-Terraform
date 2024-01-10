@@ -47,5 +47,9 @@ steps:
 #        - push
 #        - pull_request
         - promote
+      branch: 
+        - main
+      target: 
+        - prod
 
 
